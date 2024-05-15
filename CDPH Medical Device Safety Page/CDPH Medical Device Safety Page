@@ -1,5 +1,5 @@
 # this script is for Abby's device safety page
-# this script works and provides the hyperlink to the recall page
+# this script outputs json data 
 import requests
 from bs4 import BeautifulSoup
 import re
