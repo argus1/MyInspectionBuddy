@@ -1,38 +1,14 @@
 # this script searches the enforcement database by classification date
-#! python3
-
-from flask import Flask
+# this script outputs a json file
 import requests
-import csv
-from openpyxl import Workbook
-import os
-import string
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    # return "search item - 510k"
-    # optional - replace html date range form with html date picker form
-        date_range = request.args.get("date_range", "")
-    return (
-        """<form action="" method="get">
-                <input type="text" name="classification date MM/DD/YYYY">
-                <input type="submit" value="Convert">
-            </form>"""
-        + date_range
-    )
-
-@app.route("/<date_range>")
-
-def search510k():
+import json
 
 apikey = 'e3oka6wF312QcwuJguDeXVEN6XGyeJC94Hirijj8'
 
 # Ask user for minimum date
-min_date = input("Enter the minimum date (MM/DD/YYYY): ")
+min_date = input("Enter the minimum date (MM-DD-YYYY): ")
 # Ask user for maximum date
-max_date = input("Enter the maximum date (MM/DD/YYYY): ")
+max_date = input("Enter the maximum date (MM-DD-YYYY): ")
 
 # Format date range for URL
 date_range = f"{min_date}+TO+{max_date}"
@@ -52,35 +28,16 @@ response = requests.get(url)
 if response.status_code == 200:
     # JSON response
     data = response.json()
-    # Export data to CSV
-    with open('output.csv', 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        # Write header
-        csvwriter.writerow(data['results'][0].keys())
-        # Write data
-        for item in data['results']:
-            csvwriter.writerow(item.values())
+    # Export data to JSON file
+    json_filename = f"{date_range}_output.json"
+    with open(json_filename, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
-        # Export data to Excel
-        wb = Workbook()
-        ws = wb.active
-        header = list(data['results'][0].keys())  # Header
-        ws.append(header)  # Write header
-        for item in data['results']:
-            values = ["".join(filter(lambda x: x in string.printable, str(v))) for v in
-                      item.values()]  # Remove non-printable characters
-            ws.append(values)  # Write data
+        # Clean date range for filename, replacing slashes with underscores
+        clean_date_range = date_range.replace('/', '_')
+        json_filename = f"{clean_date_range}_output.json"
 
-        # Get the current working directory
-        current_directory = os.getcwd()
-        # Create the full path for the Excel file
-        excel_filename = os.path.join(current_directory, f"{clean_date_range}_output.xlsx")
-
-        wb.save(excel_filename)
-        print(f"Data exported to {excel_filename} successfully.")
+        print(f"Data exported to {json_filename} successfully.")
 else:
     print('Failed to fetch data from the API.')
 
-# Starts Flask Development Server when script is executed from command line
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
