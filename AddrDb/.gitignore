@@ -1,0 +1,18 @@
+# Logs and db
+*.log
+*.sql
+*.sqlite
+*.cjs
+
+# Env
+.env*
+.env*.local
+
+# Folders
+node_modules/
+public/
+*.DS_Store
+.DS_Store
+.venv
+react.svg
+.DS_Store/
