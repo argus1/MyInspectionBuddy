@@ -12,7 +12,9 @@
 node_modules/
 public/
 *.DS_Store
-.DS_Store
+/.DS_Store
+../.DS_Store
 .venv
 react.svg
 .DS_Store/
+__pycache__
