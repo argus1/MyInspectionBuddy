@@ -1,8 +1,10 @@
+# Main configuration of app
+# Build API first with flask
+
 import os
 from dotenv import load_dotenv
 
-# Main configuration of app
-# Build API first with flask
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS # Cross Origin Request: send request here [backend] from a different url

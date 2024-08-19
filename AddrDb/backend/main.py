@@ -1,4 +1,4 @@
-# Main endpoints/routes for API to access/create resources
+# Define Main endpoints/routes for API to access/create resources
 # Define routes needed
 
 # request object and jsonify to return json data
@@ -9,6 +9,7 @@ from models import Contact
 # Create: submit request to create endpoint
 # GET context
 # specify route/endpoint in the following decorator
+# pass to the "contacts" route = 
 @app.route("/contacts", methods=["GET"]) # specify valid method type GET method for /contacts url
 def get_contacts(): # function to handle get request that is sent to /contact endpoint
     contacts = Contact.query.all() # use flask sqlalchemy to get all different contacts in db (non returnable python object)
@@ -18,6 +19,24 @@ def get_contacts(): # function to handle get request that is sent to /contact en
     return jsonify({"contacts": json_contacts}) # return json object data instead of python object that says "contacts: json_contacts" 
     # "contacts" key in python dict; associated with json_contacts (list created)
     # return python dict object ({"contacts": json_contacts}) converted to json data
+
+@app.route("/search", methods=["GET"])
+def search_contacts ():
+    # Get query parameters from the request
+    search_params = request.args.to_dict()
+
+    # Start building the query
+    query = Contact.query
+
+    # Dynamically  add filters based on provided parameters
+    for key, value in search_params.items():
+        if hasattr(Contact, key):
+            query = query.filter(getattr(Contact, key) == value)
+
+    # Execute the query and fetch results
+    contacts = query.all()
+    json_contacts = list(map(lambda x: x.to_json(), contacts))
+    return jsonify({"results": json_contacts})
 
 
 # run flask application

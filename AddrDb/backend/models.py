@@ -1,14 +1,13 @@
-# Database models
-# Flask alchemy to interact with database
-# Create python class to represent db entry
+# Contain Database models and layout the different types of data we are working with
+# How we interact with database and we use Flask alchemy to interact with database
+# Create python class to represent db entry as well as define the datayprd that the object will be storing
 
 from config import db # relative import from config.py
 from datetime import datetime
 
-# db model (Fields) as a python class
+# db model (Fields) represented as a python class
 class Contact(db.Model):
-    LicenseAddressId = db.Column(db.Integer, primary_key=True) # unique
-    license_address_id = db.Column(db.Integer, primary_key=True) # unique
+    license_address_id = db.Column(db.Integer, primary_key=True) # specify type of field
     license_id = db.Column(db.Integer) # unique
     license_number = db.Column(db.Integer) # unique
     license_code_description = db.Column(db.String(10), unique=True, nullable=True)
@@ -17,10 +16,10 @@ class Contact(db.Model):
     license_type_code = db.Column(db.String(2), unique=True, nullable=True)
     license_status_id = db.Column(db.Integer)
     license_status_code = db.Column(db.String(2), unique=True, nullable=True) # String
-    # license_classification_id = db.Column(db.Datetime, nullable=True, default=datetime.now)
+    license_classification_id = db.Column(db.Integer) # edited (db.Datetime, nullable=True, default=datetime.now)
     license_classification_code = db.Column(db.String(80), unique=False, nullable=True) 
     license_classification_description = db.Column(db.String(80), unique=False, nullable=True) 
-    # expiration_date = db.Column(db.Datetime, nullable=True, default=datetime.now)
+    expiration_date = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
     firm_id = db.Column(db.Integer) # unique
     corporate_name = db.Column(db.String(80), unique=False, nullable=True)
     business_name = db.Column(db.String(80), unique=False, nullable=True)
@@ -39,6 +38,7 @@ class Contact(db.Model):
     exemptee_last_name = db.Column(db.String(80), unique=False, nullable=True) 
     exemptee_first_name = db.Column(db.String(80), unique=False, nullable=True)
  
+
     # Fields on class object into python dict
     def to_json(self): # convert to json object (to be passed from API to frontend)
         return { # return python dict
@@ -51,10 +51,10 @@ class Contact(db.Model):
             "licenseTypeCode": self.license_type_code,
             "licenseStatusId": self.license_status_id,
             "licenseStatusCode # String": self.license_status_code,
-            # "licenseClassificationId": self.license_classification_id,
+            "licenseClassificationId": self.license_classification_id,
             "licenseClassificationCode": self.license_classification_code,
             "licenseClassificationDescription": self.license_classification_description,
-            # "expirationDate": self.expiration_date,
+            "expirationDate": self.expiration_date,
             "firmId": self.firm_id,
             "corporateName": self.corporate_name,
             "businessName": self.business_name,
