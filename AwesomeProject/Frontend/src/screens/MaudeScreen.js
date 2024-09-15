@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
+import { logQuery } from './HomeScreen';
+
 
 const { width } = Dimensions.get('window');
+
 
 const MaudeScreen = () => {
   const [deviceName, setDeviceName] = useState('');
   const [selectedYear, setSelectedYear] = useState('ALL YEARS');
   const navigation = useNavigation();
+
+  
 
   const fetchData = () => {
     const fromDate = selectedYear !== 'ALL YEARS' ? `${selectedYear}-01-01` : '';
@@ -19,6 +25,7 @@ const MaudeScreen = () => {
       fromDate,
       toDate
     };
+    logQuery("Maude");
 
     fetch('http://10.0.0.63:5001/maude', { 
       method: 'POST',

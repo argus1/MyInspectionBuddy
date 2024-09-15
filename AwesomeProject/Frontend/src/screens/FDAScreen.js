@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Dimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import analytics from '@react-native-firebase/analytics';
+import { logQuery } from './HomeScreen';
+
 
 const { width } = Dimensions.get('window');
+
 
 const FDAScreen = ({ navigation }) => {
     const [fromDate, setFromDate] = useState(new Date());
@@ -15,6 +19,7 @@ const FDAScreen = ({ navigation }) => {
     const [showToDatePicker, setShowToDatePicker] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
 
     const onChangeFrom = (event, selectedDate) => {
         const currentDate = selectedDate || fromDate;
@@ -29,6 +34,7 @@ const FDAScreen = ({ navigation }) => {
     };
 
     const handleSearch = async () => {
+        logQuery("FDA");
         setIsLoading(true);
         setError('');
         try {

@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
+import { logQuery } from './HomeScreen';
+
 
 const { width } = Dimensions.get('window');
+
 
 const OpenHistoricalSearchScreen = () => {
     const [keyword, setKeyword] = useState('');
     const [year, setYear] = useState('');
     const navigation = useNavigation();
 
+
+
     const fetchData = () => {
         const data = {
             keyword,
             year
         };
+
+        logQuery("OpenHistorical");
 
         fetch('http://10.0.0.63:5001/openhistorical', { // Update with your server's IP address
             method: 'POST',

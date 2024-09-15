@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
+import { logQuery } from './HomeScreen';
+
 
 const { width } = Dimensions.get('window');
 
@@ -12,6 +15,8 @@ const CAEntitySearchScreen = () => {
         const data = {
             searchTerm
         };
+
+        logQuery("CAEntitySearch");
 
         fetch('http://10.0.0.63:5001/ca-business-entity', { // Update with your server's IP address
             method: 'POST',

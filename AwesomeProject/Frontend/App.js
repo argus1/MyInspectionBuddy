@@ -15,8 +15,11 @@ import OpenHistoricalScreen from './src/screens/OpenHistoricalScreen';
 import OpenHistoricalResultsScreen from './src/screens/OpenHistoricalResultsScreen';
 import CAEntitySearchScreen from './src/screens/CAEntitySearchScreen';
 import CAEntityResultsScreen from './src/screens/CAEntityResultsScreen';
+import PrivacyScreen from './src/screens/PrivacyScreen';
+
 
 const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
@@ -36,6 +39,7 @@ export default function App() {
         <Stack.Screen name="OpenHistoricalResultsScreen" component={OpenHistoricalResultsScreen} />
         <Stack.Screen name="CAEntitySearchScreen" component={CAEntitySearchScreen} />
         <Stack.Screen name="CAEntityResultsScreen" component={CAEntityResultsScreen} />
+        <Stack.Screen name="PrivacyScreen" component={PrivacyScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
