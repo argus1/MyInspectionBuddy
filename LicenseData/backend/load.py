@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import mysql.connector
 import os
 import pandas as pd
-from datetime import datetime
+# from datetime import datetime
 
 # Directory containing the CSV files
 csv_directory = "csv"
@@ -20,14 +20,22 @@ for filename in os.listdir(csv_directory):
         combined_df = pd.concat([combined_df, df], ignore_index=True)
 
 # Strip whitespace from string columns and replace NaN with ""
-df_contact = combined_df.drop_duplicates().fillna('').map(lambda x: x.strip() if isinstance(x, str) else x)
-df_contact['ExpirationDate'] = pd.to_datetime(df_contact['ExpirationDate'], format='%m/%d/%Y %I:%M:%S %p')
+# df_contact = combined_df.drop_duplicates().fillna('').map(lambda x: x.strip() if isinstance(x, str) else x)
+# df_contact['ExpirationDate'] = pd.to_datetime(df_contact['ExpirationDate'], format='%m/%d/%Y %I:%M:%S %p')
 
 # Convert 'ExpirationDate' to datetime and fill NaNs with the current date
 # current_date = datetime.now().strftime('%Y-%m-%d')
 # df_contact['ExpirationDate'] = pd.to_datetime(df_contact['ExpirationDate'], format='%Y-%m-%d', errors='coerce').fillna(current_date)
 
 # NaN stored as float in mysql
+# Strip whitespace from string columns and replace NaN with empty string
+df_contact = combined_df.drop_duplicates().fillna('').map(lambda x: x.strip() if isinstance(x, str) else x)
+
+# Use pd.to_datetime() to handle date parsing, ensuring invalid dates are set to NaT (Not a Time)
+df_contact['ExpirationDate'] = pd.to_datetime(df_contact['ExpirationDate'], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
+
+# Now, replace NaT values with None (equivalent to NULL in SQL) before insertion
+df_contact['ExpirationDate'] = df_contact['ExpirationDate'].map(lambda x: None if pd.isna(x) else x.strftime('%Y-%m-%d'))
 
 # Database connection parameters from environment variables
 load_dotenv()
@@ -63,7 +71,7 @@ try:
             license_classification_id VARCHAR(80),
             license_classification_code VARCHAR(80),
             license_classification_description VARCHAR(80),
-            expiration_date DATETIME,
+            expiration_date DATE,
             firm_id INT,
             corporate_name VARCHAR(80),
             business_name TEXT,
