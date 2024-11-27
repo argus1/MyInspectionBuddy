@@ -26,8 +26,9 @@ def index():
 @app.route("/<date_range>")
 
 def search510k():
-#this needs to be made secret
-apikey = 'e3oka6wF312QcwuJguDeXVEN6XGyeJC94Hirijj8'
+    apikey = os.getenv('FDA_API_KEY')
+    if not apikey:
+        return jsonify({"error": "API key is missing"}), 500
 
 # Ask user for search term
 search_term = input("Enter the generic medical device name to search for : ")
