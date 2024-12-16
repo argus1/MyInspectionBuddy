@@ -182,6 +182,7 @@ const CAEntitySearchScreen = () => {
                         onFocus={() => setShowSuggestions(true)}
                         returnKeyType="search"
                         onSubmitEditing={fetchData}
+                        testID="searchInput"
                     />
                     {renderSuggestions()}
                     <TouchableOpacity style={styles.searchButton} onPress={getLocation}>
