@@ -1,0 +1,131 @@
+# # Starter pipeline
+# # Start with a minimal pipeline that you can customize to build and deploy your code.
+# # Add steps that build, run tests, deploy, and more:
+# # https://aka.ms/yaml
+
+# trigger:
+# - main
+
+# pool:
+#   vmImage: ubuntu-latest
+
+# steps:
+# - script: echo Hello, world!
+#   displayName: 'Run a one-line script'
+
+# - script: |
+#     echo Add other tasks to build, test, and deploy your project.
+#     echo See https://aka.ms/yaml
+#   displayName: 'Run a multi-line script'
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+  - group: CICD
+
+pool:
+  vmImage: 'macos-latest'
+
+steps:
+  - checkout: self
+    persistCredentials: true
+    clean: true
+  - task: NodeTool@0
+    displayName: 'Install Node'
+    inputs:
+      versionSpec: '12.19.0' # you can use your desired version here
+  - script: yarn install
+    displayName: Install Dependencies
+  - script: |
+      # Disable autocommit on version bump
+      yarn config set version-sign-git-tag false
+      yarn config set version-git-tag false
+      yarn config set version-commit-hooks false
+      # Checkout branch where the build is triggered
+      git checkout $(Build.SourceBranchName)
+      # Extract existing version of package.json
+      oldVer=$(jq -r ".version" package.json)
+      # Bump version
+      yarn version --patch
+      # Add bumped version to staging
+      git add *
+      # Extract new version of package.json
+      newVer=$(jq -r ".version" package.json)
+      # Set environment variables
+      echo "##vso[task.setvariable variable=OLD_VERSION]$oldVer"
+      echo "##vso[task.setvariable variable=NEW_VERSION]$newVer"
+    displayName: 'Bump version and set variables'
+  - task: ios-bundle-version@1
+    displayName: 'Bump iOS version'
+    inputs:
+      sourcePath: 'ios/MyProject/Info.plist'
+      versionCodeOption: 'buildid'
+      versionCode: '$(Build.BuildId)'
+      versionName: '$(NEW_VERSION)'
+      printFile: false
+  - task: InstallAppleCertificate@2
+    displayName: Install Apple Certificate
+    inputs:
+      certSecureFile: 'MobileProd.p12'
+      certPwd: '$(AppleCertificatePassword)'
+      keychain: 'temp'
+      deleteCert: true
+  - task: InstallAppleProvisioningProfile@1
+    displayName: 'Install Apple Provisioning Profile'
+    inputs:
+      provisioningProfileLocation: 'secureFiles'
+      provProfileSecureFile: 'MyProject.mobileprovision'
+      removeProfile: true
+  - task: CocoaPods@0
+    displayName: 'Install CocoaPods'
+    inputs:
+      workingDirectory: 'ios'
+  - script: |
+      tag="mobile_$(NEW_VERSION)"
+      echo "New tag $tag"
+      git add *
+      git commit -m "Update version from $(OLD_VERSION) to $(NEW_VERSION)"
+      git tag $tag
+      git pull --rebase origin $(Build.SourceBranchName)
+      git push origin $(Build.SourceBranchName)
+      git push --tags
+    displayName: Bump commit
+  - task: Xcode@5
+    displayName: 'Build IPA'
+    inputs:
+      actions: 'build'
+      configuration: 'Release'
+      sdk: 'iphoneos'
+      xcWorkspacePath: 'ios/MyProject.xcworkspace'
+      scheme: 'MyProject'
+      packageApp: true
+      exportPath: 'output'
+      signingOption: 'manual'
+      signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+      provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+  - task: CopyFiles@2
+    displayName: 'Copy IPA'
+    inputs:
+      contents: '**/*.ipa'
+      targetFolder: '$(build.artifactStagingDirectory)'
+      overWrite: true
+      flattenFolders: true
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish IPA to artifacts'
+    inputs:
+      PathtoPublish: '$(build.artifactStagingDirectory)'
+      ArtifactName: 'ios'
+      publishLocation: 'Container'
+  - task: AppCenterDistribute@3
+    displayName: 'Upload IPA to AppCenter'
+    inputs:
+      serverEndpoint: 'App Center'
+      appSlug: 'hnadeem/MyProject-iOS'
+      appFile: 'output/MyProject.ipa'
+      releaseNotesOption: 'file'
+      isMandatory: true
+      destinationType: 'groups'
+      distributionGroupId: '058a4704-ea24-4877-a2f0-bdfaff9335dc'
+      isSilent: true
