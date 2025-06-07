@@ -1,0 +1,162 @@
+# Expo to IPA pipeline
+# Install all dependency, convert expo project to xcode, build .ipa from xcode and upload to app store connect
+
+trigger:
+  branches:
+    include:
+    - main
+
+variables:
+  - group: Mobile
+
+pool:
+  vmImage: 'macos-latest'
+
+jobs:
+  - job: CICD
+    timeoutInMinutes: 0
+    
+    steps:
+      - checkout: self
+        persistCredentials: true
+        clean: true
+      - task: InstallAppleCertificate@2
+        displayName: Install Apple Certificate
+        inputs:
+          certSecureFile: 'distributionCertificates.p12'
+          certPwd: '$(AppleP12Password)'
+          keychain: 'temp'
+          deleteCert: true
+      - task: InstallAppleProvisioningProfile@1
+        displayName: 'Install Apple Provisioning Profile'
+        inputs:
+          provisioningProfileLocation: 'secureFiles'
+          provProfileSecureFile: 'MyInspectionBuddy.mobileprovision'
+          removeProfile: true
+      - task: NodeTool@0
+        displayName: 'Install Node'
+        inputs:
+          versionSpec: '20.19.0'
+      - script: yarn install
+        workingDirectory: "AwesomeProject/Frontend-IPA"
+        displayName: Install Dependencies
+      - script: |
+          # Disable autocommit on version bump
+          yarn config set version-sign-git-tag false
+          yarn config set version-git-tag false
+          yarn config set version-commit-hooks false
+          # Checkout branch where the build is triggered
+          git fetch origin
+          git checkout -b main origin/main
+          # Extract existing version of package.json
+          oldVer=$(jq -r ".version" package.json)
+          # Bump version
+          yarn version --patch
+          # Add bumped version to staging
+          git add *
+          # Extract new version of package.json
+          newVer=$(jq -r ".version" package.json)
+          # Set environment variables
+          echo "##vso[task.setvariable variable=OLD_VERSION]$oldVer"
+          echo "##vso[task.setvariable variable=NEW_VERSION]$newVer"
+        displayName: 'Bump Version'
+        workingDirectory: "AwesomeProject/Frontend-IPA"
+      - script: npx expo prebuild -p ios --clean
+        workingDirectory: "AwesomeProject/Frontend-IPA"
+        displayName: 'Expo Prebuilt to Xcode'
+      - task: ios-bundle-version@1
+        displayName: 'Bump iOS Version'
+        inputs:
+          sourcePath: 'AwesomeProject/Frontend-IPA/ios/AwesomeProject/Info.plist'
+          versionCodeOption: 'buildid'
+          versionCode: '$(Build.BuildId)'
+          versionName: '$(NEW_VERSION)'
+          printFile: false
+      - script: |
+          tag="ios_$(NEW_VERSION)"
+          echo "New tag $tag"
+          git add *
+          git commit -m "Update version from $(OLD_VERSION) to $(NEW_VERSION) [skip ci]"
+          git tag $tag
+          git pull --rebase origin main
+          git push origin main
+          git push --tags
+        displayName: Commit Bumped Version
+      - task: CocoaPods@0
+        displayName: 'Install CocoaPods'
+        inputs:
+          workingDirectory: 'AwesomeProject/Frontend-IPA/ios'
+      - task: CmdLine@2
+        inputs:
+          script: |
+            mkdir '$(build.artifactStagingDirectory)/Archive' && cd "$_"
+
+            /usr/libexec/PlistBuddy -c "Clear dict" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add method string app-store-connect" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add signingStyle string manual" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add signingCertificate string Apple Distribution" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add provisioningProfiles dict" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add provisioningProfiles:$(AppBundleID) string $(APPLE_PROV_PROFILE_UUID)" exportOptions.plist
+            /usr/libexec/PlistBuddy -c "Add teamID string $(TeamID)" exportOptions.plist
+            /usr/libexec/PlistBuddy -x -c "Print" exportOptions.plist
+        displayName: 'Generate Export Options'
+      - task: Xcode@5
+        displayName: 'Xcode Archive'
+        inputs:
+          actions: 'clean archive'
+          configuration: 'Release'
+          sdk: 'iphoneos'
+          xcWorkspacePath: 'AwesomeProject/Frontend-IPA/ios/AwesomeProject.xcworkspace'
+          scheme: 'AwesomeProject'
+          packageApp: false
+          useXcpretty: false
+          signingOption: 'default'
+          destinationPlatformOption: 'iOS'
+          args: '-verbose -archivePath $(build.artifactStagingDirectory)/Archive/AwesomeProject.xcarchive CODE_SIGNING_REQUIRED=Yes CODE_SIGNING_ALLOWED=No'
+      - task: Bash@3
+        displayName: 'Code Signing'
+        inputs:
+          targetType: 'inline'
+          script:
+            codesign -f -s "$(APPLE_CERTIFICATE_SIGNING_IDENTITY)" $(build.artifactStagingDirectory)/Archive/AwesomeProject.xcarchive/Products/Applications/AwesomeProject.app
+      - task: Bash@3
+        displayName: 'Xcode Export to IPA'
+        inputs:
+          targetType: 'inline'
+          script:
+            /usr/bin/xcodebuild -exportArchive -archivePath $(build.artifactStagingDirectory)/Archive/AwesomeProject.xcarchive -exportPath $(Build.ArtifactStagingDirectory)/App -exportOptionsPlist $(build.artifactStagingDirectory)/Archive/exportOptions.plist
+      - task: CopyFiles@2
+        displayName: 'Copy IPA'
+        inputs:
+          sourceFolder: '$(build.artifactStagingDirectory)/App'
+          contents: '*.ipa'
+          targetFolder: '$(build.artifactStagingDirectory)/IPA'
+          overWrite: true
+          flattenFolders: true
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish IPA to Artifacts'
+        inputs:
+          PathtoPublish: '$(build.artifactStagingDirectory)/IPA'
+          ArtifactName: 'ios'
+          publishLocation: 'Container'
+      - task: DownloadBuildArtifacts@1
+        displayName: 'Download Artifacts'
+        inputs:
+          buildType: current
+          downloadType: specific
+          artifactName: 'ios'
+          downloadPath: '$(build.artifactStagingDirectory)/Publish'
+      - task: AppStoreRelease@1
+        displayName: 'Publish IPA to TestFlight'
+        inputs:
+          authType: ApiKey
+          apiKeyId: '$(APIKeyID)'
+          apiKeyIssuerId: '$(APIKeyIssuerID)'
+          apitoken: '$(APIToken)'
+          releaseTrack: TestFlight
+          appIdentifier: '$(AppBundleID)'
+          appType: iOS
+          ipaPath: '$(build.artifactStagingDirectory)/App/*.ipa'
+          shouldSkipWaitingForProcessing: true
+          shouldSkipSubmission: true
+          appSpecificId: '$(AppSpecificID)'
