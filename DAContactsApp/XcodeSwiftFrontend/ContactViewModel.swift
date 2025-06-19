@@ -10,7 +10,7 @@ class ContactViewModel: ObservableObject {
     @Published var contacts: [Contact] = []
 
     func fetchContacts() {
-        guard let url = URL(string: "https://dacontactsapi.onrender.com/contacts") else {
+        guard let url = URL(string: "https://dacontactsapi-1.onrender.com/contacts") else {
             print("Invalid URL")
             return
         }
