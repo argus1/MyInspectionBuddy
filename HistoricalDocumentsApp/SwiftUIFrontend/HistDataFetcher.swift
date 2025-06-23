@@ -12,7 +12,7 @@ class HistDataFetcher: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        let base = "http://127.0.0.1:5000/search"
+        let base = "https://historicaldocumentsapi.onrender.com/search"
         var components = URLComponents(string: base)!
 
         var queryItems = [
