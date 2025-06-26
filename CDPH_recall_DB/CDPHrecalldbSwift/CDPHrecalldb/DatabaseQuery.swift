@@ -10,11 +10,28 @@ import SQLite3
 
 struct DatabaseQuery {
 
+    static func getDatabasePath() -> String? {
+        // 1. Look in app bundle
+        if let bundledDB = Bundle.main.url(forResource: "device_recalls", withExtension: "db") {
+            return bundledDB.path
+        }
+
+
+        // 2. Fallback to local directory for testing (e.g. Xcode previews or CLI)
+        let localPath = FileManager.default.currentDirectoryPath + "/device_recalls.db"
+        if FileManager.default.fileExists(atPath: localPath) {
+            return localPath
+        }
+
+        print("❌ Database not found.")
+        return nil
+    }
+
     static func fetchAllRecalls() -> [Recall] {
         var recalls: [Recall] = []
         var db: OpaquePointer?
 
-        let dbPath = "/Users/nicoletang/Desktop/CDPH/MyInspectionBuddy/CDPHrecallDB/CDPHrecalldb/CDPHrecalldb/device_recalls.db"
+        guard let dbPath = getDatabasePath() else { return [] }
 
         if sqlite3_open(dbPath, &db) != SQLITE_OK {
             print("❌ Failed to open database.")
@@ -51,7 +68,7 @@ struct DatabaseQuery {
         var results: [[String: String]] = []
         var db: OpaquePointer?
 
-        let dbPath = "/Users/nicoletang/Desktop/CDPH/MyInspectionBuddy/CDPHrecallDB/CDPHrecalldb/CDPHrecalldb/device_recalls.db"
+        guard let dbPath = getDatabasePath() else { return [] }
 
         if sqlite3_open(dbPath, &db) != SQLITE_OK {
             print("❌ Failed to open database.")
