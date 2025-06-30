@@ -33,6 +33,14 @@ struct HomePageView: View {
             NavigationView {
                 ScrollView {
                     VStack(spacing: 24) {
+                        Image("cdph-hq")
+                            .resizable() // Allows the image to be resized.
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 400)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal)
+                        
+                        
                         Button(action: {
                             print("Device Detection Tapped")
                         }) {
@@ -58,6 +66,14 @@ struct HomePageView: View {
                             }
                         }
                         .padding()
+                        
+                        Image("image4")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 500)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal)
+                            .padding(.bottom)
                     }
                     .padding(.top)
                 }
@@ -117,14 +133,16 @@ struct ServiceTile: View {
     
     @ViewBuilder
     private func destinationView(for service: Service) -> some View {
-        if service.name == "FDA Enforcement" {
+        switch service.name {
+        case "FDA Enforcement":
             FDASearchView()
-        } else {
+        case "MAUDE":
+            MaudeSearchView()
+        default:
             Text("Placeholder view for \(service.name)")
                 .navigationTitle(service.name)
         }
-    }
-}
+    }}
 
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {
