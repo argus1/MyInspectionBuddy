@@ -6,7 +6,6 @@
 //  LicensingDatabaseApp
 //
 //  Created by Tanay Doppalapudi on 7/8/25.
-//  Updated by ChatGPT on 7/11/25.
 //
 
 import SwiftUI
@@ -281,6 +280,16 @@ private struct RegistrationListView: View {
                 }
                 // Triggers loading more results when near end of list
                 .task { await viewModel.loadMoreIfNeeded(currentItem: reg) }
+                // Enable drag-out of registration summary text
+                .draggable(reg)
+                // Add context menu for copying registration info
+                .contextMenu {
+                    Button(action: {
+                        UIPasteboard.general.string = reg.summaryText
+                    }) {
+                        Label("Copy Registration Info", systemImage: "doc.on.doc")
+                    }
+                }
             }
             
             // Loading spinner when more results are being fetched

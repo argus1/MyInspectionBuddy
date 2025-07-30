@@ -1,3 +1,5 @@
+// HistoricalDocsAppApp.swift
+// Entry point of the HistoricalDocsApp: sets up the main SwiftUI app structure.
 //
 //  HistoricalDocsAppApp.swift
 //  HistoricalDocsApp
@@ -5,20 +7,18 @@
 //  Created by Tanay Doppalapudi on 6/19/25.
 //
 
-// HistoricalDocsAppApp.swift
-// Entry point for the HistoricalDocsApp. Initializes and displays the main content view.
-
+// SwiftUI framework: provides UI components and app lifecycle management.
 import SwiftUI
 
-// Marks this struct as the entry point of the SwiftUI app.
-// Main application structure conforming to the App protocol.
+// Marks the main entry point of the app.
 @main
+// Defines the app's structure and the scenes it presents.
 struct HistoricalDocsAppApp: App {
-    // Declares the app's user interface scene.
+    // Defines the content and behavior of the app's main scene.
     var body: some Scene {
-        // Sets the main content view (HistContentView) as the root view for the app.
+        // The primary window group that hosts the ContentView.
         WindowGroup {
-            HistContentView()
+            ContentView()
         }
     }
 }

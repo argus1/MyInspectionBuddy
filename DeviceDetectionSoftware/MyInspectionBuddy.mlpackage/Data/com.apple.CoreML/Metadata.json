@@ -1,0 +1,10 @@
+{
+  "MLModelCreatorDefinedKey" : {
+    "com.apple.createml.app.tag" : "150",
+    "com.apple.createml.version" : "15.0.0",
+    "com.apple.coreml.model.preview.type" : "objectDetector",
+    "iterations" : "26000",
+    "com.apple.createml.app.version" : "6.0 Beta"
+  },
+  "MLModelAuthorKey" : "yi yang"
+}

@@ -1,86 +1,84 @@
 //
-// DocumentDetailView.swift
-// Displays details of an FDADocument including title, date, content, and a share button.
-//
-
+// SwiftUI view to display detailed information about an FDA document, including metadata, body text, and actions for dragging, copying, and sharing.
 import SwiftUI
 import Foundation
-import UIKit
 
-// Main SwiftUI view that shows document metadata and full body text in a scrollable layout.
+// Main detail view for an FDADocument: shows title, year, effective date, full text, and supports drag/copy/share.
 struct DocumentDetailView: View {
+    // The document to display in this view.
     let document: FDADocument
-    // Tracks whether the share sheet is currently presented.
+    // State flag to control presentation of the iOS share sheet.
     @State private var isShareSheetPresented = false
 
-    // Constructs the UI layout including title, metadata, body content, and toolbar.
     var body: some View {
-        // Scrollable content view for reading long text documents.
+        // Scrollable container for document details.
         ScrollView {
+            // Vertical stack to layout header, metadata, and body text.
             VStack(alignment: .leading, spacing: 20) {
-                // Document title and metadata section.
+                // Header section: title and metadata of the document.
                 Group {
-                    HStack(spacing: 8) {
-                        Image(systemName: "doc.text")
-                        Text(document.title ?? document.displayType)
-                            .font(.title)
-                            .bold()
-                    }
+                    // Display the document title or fallback to docType.
+                    Text(document.title ?? document.docType?.capitalized ?? "Document")
+                        .font(.title)
+                        .bold()
 
+                    // Show the document's year if available.
                     if let year = document.year {
-                        HStack(spacing: 4) {
-                            Image(systemName: "calendar")
-                            // Display the year of the document, if available.
-                            Text("Year: \(String(year))")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                        Text("Year: \(NumberFormatter.localizedString(from: NSNumber(value: year), number: .none))")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
 
+                    // Show the document's effective date if available.
                     if let effectiveDate = document.effectiveDate {
-                        HStack(spacing: 4) {
-                            Image(systemName: "calendar.badge.clock")
-                            // Display the effective date of the document, if available.
-                            Text("Effective Date: \(effectiveDate)")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                        Text("Effective Date: \(effectiveDate)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
                 }
 
-                // Divider separates metadata from document body content.
+                // Visual separator between header and body.
                 Divider()
 
-                // Section header for document body content.
-                HStack(spacing: 6) {
-                    Image(systemName: "doc.append")
-                    Text("Document Text")
-                        .font(.headline)
-                }
+                // Section header for the full document text.
+                Text("Document Text")
+                    .font(.headline)
 
-                // Main text content of the document or fallback message if empty.
-                Text(document.cleanBody.isEmpty ? "No content available." : document.cleanBody)
+                // Display the body of the document with line wrapping.
+                Text(document.text ?? "No content available.")
                     .font(.body)
                     .fixedSize(horizontal: false, vertical: true)
 
+                // Pushes content to the top within the ScrollView.
                 Spacer()
             }
             .padding()
+            // Enable drag-and-drop of the document object.
+            .draggable(document)
         }
+        // Set the navigation bar title for this view.
         .navigationTitle("Document Detail")
-        // Toolbar with share button to present ActivityView.
+        // Toolbar with actions for copying info and sharing text.
         .toolbar {
+            // Copy the document's formatted info to the clipboard.
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    UIPasteboard.general.string = document.formattedInfo()
+                }) {
+                    Image(systemName: "doc.on.doc")
+                }
+            }
+            // Show the iOS share sheet to share the document text.
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     isShareSheetPresented = true
                 }) {
                     Image(systemName: "square.and.arrow.up")
                 }
-                // Disable share button if there is no text to share.
                 .disabled(document.text == nil)
             }
         }
-        // Conditionally present a share sheet with the full text of the document.
+        // Present the share sheet when triggered.
         .sheet(isPresented: $isShareSheetPresented) {
             if let text = document.text {
                 ActivityView(activityItems: [text])
@@ -89,16 +87,17 @@ struct DocumentDetailView: View {
     }
 }
 
-// Wrapper to present UIActivityViewController in SwiftUI.
+// Wrapper to present UIActivityViewController for sharing content.
 struct ActivityView: UIViewControllerRepresentable {
     let activityItems: [Any]
     let applicationActivities: [UIActivity]? = nil
 
-    // Create and return a configured UIActivityViewController.
     func makeUIViewController(context: Context) -> UIActivityViewController {
+        // Create and return the UIKit share sheet controller.
         UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
     }
 
-    // No update logic needed for static activity view.
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // No update logic needed for the share sheet.
+    }
 }

@@ -74,6 +74,12 @@ struct DAContentView: View {
                         .foregroundColor(.gray)
                     TextField("Search by name", text: $viewModel.searchName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onTapGesture {
+                            if viewModel.searchName.isEmpty,
+                               let clip = UIPasteboard.general.string {
+                                viewModel.searchName = clip
+                            }
+                        }
                 }
                 .padding(.horizontal)
 
@@ -83,8 +89,47 @@ struct DAContentView: View {
                         .foregroundColor(.gray)
                     TextField("Search by county", text: $viewModel.searchCounty)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onTapGesture {
+                            if viewModel.searchCounty.isEmpty,
+                               let clip = UIPasteboard.general.string {
+                                viewModel.searchCounty = clip
+                            }
+                        }
                 }
                 .padding([.horizontal, .bottom])
+
+                // Section for custom contacts (only shows if any custom contact exists)
+                if !viewModel.contacts.filter({ $0.isCustom == true }).isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Custom Contacts")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        ForEach(viewModel.contacts.filter { $0.isCustom == true }) { customContact in
+                            NavigationLink(destination: ContactDetailView(contact: customContact)) {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "person.crop.circle.badge.plus")
+                                        .font(.title)
+                                        .foregroundColor(.purple)
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(customContact.name)
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                        Text(customContact.county)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                }
+                                .padding()
+                                .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+                    .padding(.bottom, 8)
+                }
 
                 // Section displaying user's current county location.
                 HStack(spacing: 8) {
@@ -113,6 +158,48 @@ struct DAContentView: View {
                 )
                 .padding(.horizontal)
                 .padding(.bottom, 8)
+
+                // Drop zone for dragging in contact text (still present and functional)
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(.systemGray5))
+                    .frame(height: 50)
+                    .overlay(Text("📥 Drag contact text here to add")
+                        .font(.subheadline)
+                        .foregroundColor(.gray))
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
+                    .dropDestination(for: String.self) { items, location in
+                        for item in items {
+                            // Split dragged text into lines and trim whitespace
+                            let lines = item.components(separatedBy: .newlines).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+                            
+                            var name = lines.first ?? "Unknown"
+                            var phone = ""
+                            var county = "Unknown"
+                            
+                            // Regex for phone numbers
+                            let phoneRegex = "\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}"
+                            
+                            for line in lines.dropFirst() {
+                                if phone.isEmpty,
+                                   line.range(of: phoneRegex, options: .regularExpression) != nil {
+                                    phone = line
+                                    continue
+                                }
+                                if county == "Unknown" {
+                                    if line.localizedCaseInsensitiveContains("county") {
+                                        county = line.replacingOccurrences(of: "County", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+                                    } else if !line.isEmpty {
+                                        county = line
+                                    }
+                                }
+                            }
+                            
+                            let newContact = Contact(name: name, county: county, phone: phone, isCustom: true)
+                            viewModel.contacts.append(newContact)
+                        }
+                        return true
+                    }
 
                 // Display a special card for the user's local contact, if available.
                 if let county = locationManager.userCounty,
@@ -171,6 +258,20 @@ struct DAContentView: View {
                             }
                         }
                         .padding(.vertical, 8)
+                    }
+                    // Enable dragging this contact out of the app
+                    .draggable(contact)
+                    
+                    // Add a context menu for copying and sharing contact info
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = contact.transferSummary
+                        }) {
+                            Label("Copy Contact Info", systemImage: "doc.on.doc")
+                        }
+                        ShareLink(item: contact.transferSummary) {
+                            Label("Share Contact", systemImage: "square.and.arrow.up")
+                        }
                     }
                     .listRowSeparator(.visible)
                 }

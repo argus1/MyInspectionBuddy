@@ -1,60 +1,54 @@
 // HistDataFetcher.swift
-// ViewModel responsible for fetching paginated FDA historical documents using query parameters.
+// Handles fetching FDA historical documents from the API, decoding JSON, and managing pagination and loading state.
 
+// Foundation provides URLSession, data tasks, and basic data types.
 import Foundation
 
-// ObservableObject managing document results, loading state, and error messages.
+// ObservableObject managing document fetch operations and publishing state updates to the UI.
 class HistDataFetcher: ObservableObject {
-    // List of fetched documents to be displayed.
+    // The list of fetched documents to display in the UI.
     @Published var documents: [FDADocument] = []
-    // Flag to indicate if data is currently loading.
+    // Tracks whether a fetch request is currently in progress.
     @Published var isLoading = false
-    // Error message to be displayed if a request fails.
+    // Holds any error message to display if fetching or decoding fails.
     @Published var errorMessage: String? = nil
-    // Tracks the current page for pagination.
+    // The current page number for paginated API requests.
     @Published var currentPage = 1
-    // Indicates if more pages are available.
+    // Indicates if more pages are available based on totalResults and documents count.
     @Published var hasMore = true
-    // Total number of results returned by the API.
+    // The total number of results reported by the API.
     @Published var totalResults = 0
 
-    /// Fetch documents from the backend API with optional filters for type and date range.
-    /// - Parameters:
-    ///   - query: Text query string for search.
-    ///   - docType: Optional document type filter.
-    ///   - startDate: Optional start date for filtering (YYYY-MM-DD).
-    ///   - endDate: Optional end date for filtering (YYYY-MM-DD).
-    ///   - page: Page number for pagination (default: 1).
-    ///   - limit: Number of results per page (default: 20).
-    func fetchDocuments(
-        query: String,
-        docType: String,
-        startDate: String,
-        endDate: String,
-        page: Int = 1,
-        limit: Int = 20
-    ) {
+    // Fetch documents from the API using given filters and pagination parameters.
+    func fetchDocuments(query: String, docType: String, startDate: String, endDate: String, page: Int = 1, limit: Int = 20) {
+        // Begin fetch: reset error and set loading state.
         isLoading = true
         errorMessage = nil
 
-        // Build the URL with query parameters.
+        // Construct the base URL and append query parameters.
         let base = "https://historicaldocumentsapi.onrender.com/search"
         var components = URLComponents(string: base)!
+
+        // Required query items: search text, page number, and page size.
         var queryItems = [
             URLQueryItem(name: "query", value: query),
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "limit", value: String(limit))
         ]
+
+        // Append document type filter if provided.
         if !docType.isEmpty {
             queryItems.append(URLQueryItem(name: "title", value: docType))
         }
+        // Append date range filters if both start and end dates are provided.
         if !startDate.isEmpty && !endDate.isEmpty {
             queryItems.append(URLQueryItem(name: "start_date", value: startDate))
             queryItems.append(URLQueryItem(name: "end_date", value: endDate))
         }
+
         components.queryItems = queryItems
 
-        // Validate the constructed URL.
+        // Validate the URL constructed from components.
         guard let url = components.url else {
             DispatchQueue.main.async {
                 self.errorMessage = "Invalid URL"
@@ -63,21 +57,22 @@ class HistDataFetcher: ObservableObject {
             return
         }
 
-        print("📡 Fetching URL: \(url.absoluteString)")
-        print("📅 Date Range: \(startDate) to \(endDate)")
+        // Perform the network request asynchronously.
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            // On response, clear loading indicator on the main thread.
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
 
-        // Perform the network request to fetch document data.
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            DispatchQueue.main.async { self.isLoading = false }
-
-            // Handle networking error.
+            // Handle network errors by updating the errorMessage.
             if let error = error {
                 DispatchQueue.main.async {
                     self.errorMessage = "Network error: \(error.localizedDescription)"
                 }
                 return
             }
-            // Ensure data is returned.
+
+            // Ensure data was received; otherwise, set an error.
             guard let data = data else {
                 DispatchQueue.main.async {
                     self.errorMessage = "No data received."
@@ -85,18 +80,18 @@ class HistDataFetcher: ObservableObject {
                 return
             }
 
-            // Debug print of raw JSON string for inspection.
+            // Debug: log the raw JSON response for troubleshooting.
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("RAW JSON:\n\(jsonString)")
             }
 
+            // Attempt to decode the JSON into our response and update state.
             do {
-                // Attempt to decode the API response into FDAResponse model.
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(FDAResponse.self, from: data)
+                print("✅ Decoded \(response.results.count) results")
 
                 DispatchQueue.main.async {
-                    // Replace or append to document list based on page number.
                     if page == 1 {
                         self.documents = response.results
                     } else {
@@ -106,14 +101,47 @@ class HistDataFetcher: ObservableObject {
                     self.hasMore = (self.documents.count < self.totalResults)
                     self.currentPage = page
                 }
-
-            } catch {
-                // Handle decoding errors and show user-friendly message.
+            }
+            // Handle data corrupted decoding errors with descriptive messages.
+            catch let DecodingError.dataCorrupted(context) {
+                // Handle dataCorrupted decoding errors.
+                print("Data corrupted:", context.debugDescription)
+                print("codingPath:", context.codingPath)
                 DispatchQueue.main.async {
-                    self.errorMessage = "Decoding error: \(error.localizedDescription)"
+                    self.errorMessage = "Data corrupted: \(context.debugDescription)"
                 }
             }
-        }
-        .resume()
+            // Handle keyNotFound decoding errors.
+            catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key.stringValue)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    self.errorMessage = "Key '\(key.stringValue)' not found: \(context.debugDescription)"
+                }
+            }
+            // Handle typeMismatch decoding errors.
+            catch let DecodingError.typeMismatch(type, context) {
+                print("Type mismatch for type \(type):", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    self.errorMessage = "Type mismatch for type \(type): \(context.debugDescription)"
+                }
+            }
+            // Handle valueNotFound decoding errors.
+            catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+                DispatchQueue.main.async {
+                    self.errorMessage = "Value '\(value)' not found: \(context.debugDescription)"
+                }
+            }
+            // Handle any other unexpected errors.
+            catch {
+                print("Unexpected decoding error:", error)
+                DispatchQueue.main.async {
+                    self.errorMessage = "Unexpected decoding error: \(error.localizedDescription)"
+                }
+            }
+        }.resume()
     }
 }

@@ -47,6 +47,30 @@ struct ContactDetailView: View {
                 Link("Visit Website", destination: URL(string: contact.website)!)
             }
         }
+        .contextMenu {
+            Button(action: {
+                UIPasteboard.general.string = """
+                Name: \(contact.name)
+                County: \(contact.county)
+                Phone: \(contact.phone)
+                Address: \(contact.address)
+                Fax: \(contact.fax)
+                Website: \(contact.website)
+                """
+            }) {
+                Label("Copy Contact Info", systemImage: "doc.on.doc")
+            }
+            ShareLink(item: """
+Name: \(contact.name)
+County: \(contact.county)
+Phone: \(contact.phone)
+Address: \(contact.address)
+Fax: \(contact.fax)
+Website: \(contact.website)
+""") {
+                Label("Share Contact", systemImage: "square.and.arrow.up")
+            }
+        }
         // Sets the navigation bar title to the contact's name.
         .navigationTitle(contact.name)
     }

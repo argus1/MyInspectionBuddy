@@ -168,5 +168,26 @@ struct RegistrationDetailView: View {
         }
         // Set the navigation bar title for the detail view.
         .navigationTitle("Details")
+        .contextMenu {
+            Button(action: {
+                UIPasteboard.general.string = registration.summaryText
+            }) {
+                Label("Copy Registration Info", systemImage: "doc.on.doc")
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack {
+                    Button(action: {
+                        UIPasteboard.general.string = registration.summaryText
+                    }) {
+                        Label("Copy", systemImage: "doc.on.doc")
+                    }
+                    ShareLink(item: registration.summaryText) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                }
+            }
+        }
     }
 }

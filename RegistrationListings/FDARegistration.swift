@@ -2,10 +2,11 @@
 //  FDARegistration.swift
 //  Defines data models for decoding FDA registration API responses, including registration details and product data.
 //
-//  Updated by ChatGPT on 7/10/25.
 //
 
 import Foundation
+import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - Top-level API wrapper
 // Represents the full JSON response from the FDA API, including metadata and a list of registrations.
@@ -67,6 +68,22 @@ struct FDARegistration: Identifiable, Decodable {
     /// Returns the device class of the first product or "Unknown".
     var deviceClass: String {
         products?.first?.openfda?.deviceClass ?? "Unknown"
+    }
+
+    /// A summary text that combines key registration details for copy/drag operations.
+    var summaryText: String {
+        let device = products?.first?.openfda?.deviceName ?? "Unknown Device"
+        let company = registration?.name ?? "Unknown Company"
+        let regNum = registration?.registrationNumber ?? "Unknown"
+        let fei = registration?.feiNumber ?? "Unknown"
+        let creation = products?.first?.createdDate ?? "Unknown"
+        return """
+        Device: \(device)
+        Company: \(company)
+        Registration #: \(regNum)
+        FEI #: \(fei)
+        Creation Date: \(creation)
+        """
     }
 
     // Optional fields shown in the detailed view.
@@ -174,6 +191,14 @@ struct FDARegistration: Identifiable, Decodable {
                 case regulationNumber = "regulation_number"
                 case deviceClass      = "device_class"
             }
+        }
+    }
+}
+
+extension FDARegistration: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .plainText) { registration in
+            return registration.summaryText.data(using: .utf8)!
         }
     }
 }
