@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "serpapi-search-swift",
+        "repositoryURL": "https://github.com/serpapi/serpapi-search-swift.git",
+        "state": {
+          "branch": "dev",
+          "revision": "38ebd0f9f783953a9fc8d91a68f7b3e78c137978",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

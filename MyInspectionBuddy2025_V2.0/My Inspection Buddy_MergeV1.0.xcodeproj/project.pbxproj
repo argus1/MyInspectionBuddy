@@ -1,0 +1,663 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		214335722E091742004A1A09 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2143355C2E091740004A1A09 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 214335632E091740004A1A09;
+			remoteInfo = "My Inspection Buddy_2025";
+		};
+		2143357C2E091742004A1A09 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2143355C2E091740004A1A09 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 214335632E091740004A1A09;
+			remoteInfo = "My Inspection Buddy_2025";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		217FB3752E44F675000EC483 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		210286062E45B7E3008BCE30 /* MyInspectionBuddy_MergeV1.0-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyInspectionBuddy_MergeV1.0-Bridging-Header.h"; sourceTree = "<group>"; };
+		210298D52E466551008BCE30 /* My Inspection Buddy_MergeV1.0Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "My Inspection Buddy_MergeV1.0Release.entitlements"; sourceTree = "<group>"; };
+		214335642E091740004A1A09 /* My Inspection Buddy_MergeV1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Inspection Buddy_MergeV1.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		214335712E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "My Inspection Buddy_MergeV1.0Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2143357B2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "My Inspection Buddy_MergeV1.0UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		21F951302E27545900313173 /* My-Inspection-Buddy-MergeV1-0-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "My-Inspection-Buddy-MergeV1-0-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		214335CB2E0D9689004A1A09 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0Tests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist.plist,
+			);
+			target = 214335702E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests */;
+		};
+		214335CC2E0D9689004A1A09 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0UITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist.plist,
+			);
+			target = 2143357A2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests */;
+		};
+		21F951312E27EC4000313173 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CDPHrecalldb/device_recalls.db,
+				CDPHrecalldb/makeCDPHrecalldb.py,
+				"CDPHrecalldb/swift-toolchain-sqlite",
+				CDPHrecalldb/SwiftSoup,
+				Info.plist.plist,
+				PrivatePolicy/Azure.pdf,
+				PrivatePolicy/HIPAA.pdf,
+				PrivatePolicy/PHAM114000.pdf,
+				PrivatePolicy/SAM5310.pdf,
+				PrivatePolicy/SAM5320.3.pdf,
+				SAPTravelInfo/ItineraryKVSPLZ_28FEB.pdf,
+				SAPTravelInfo/trip_itinerary.ics,
+			);
+			target = 214335632E091740004A1A09 /* My Inspection Buddy_MergeV1.0 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		214335662E091740004A1A09 /* My Inspection Buddy_2025 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				21F951312E27EC4000313173 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0" target */,
+				214335CB2E0D9689004A1A09 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0Tests" target */,
+				214335CC2E0D9689004A1A09 /* Exceptions for "My Inspection Buddy_2025" folder in "My Inspection Buddy_MergeV1.0UITests" target */,
+			);
+			path = "My Inspection Buddy_2025";
+			sourceTree = "<group>";
+		};
+		214335742E091742004A1A09 /* My Inspection Buddy_2025Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "My Inspection Buddy_2025Tests";
+			sourceTree = "<group>";
+		};
+		2143357E2E091742004A1A09 /* My Inspection Buddy_2025UITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "My Inspection Buddy_2025UITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		214335612E091740004A1A09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2143356E2E091742004A1A09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214335782E091742004A1A09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2143355B2E091740004A1A09 = {
+			isa = PBXGroup;
+			children = (
+				210298D52E466551008BCE30 /* My Inspection Buddy_MergeV1.0Release.entitlements */,
+				210286062E45B7E3008BCE30 /* MyInspectionBuddy_MergeV1.0-Bridging-Header.h */,
+				21F951302E27545900313173 /* My-Inspection-Buddy-MergeV1-0-Info.plist */,
+				214335662E091740004A1A09 /* My Inspection Buddy_2025 */,
+				214335742E091742004A1A09 /* My Inspection Buddy_2025Tests */,
+				2143357E2E091742004A1A09 /* My Inspection Buddy_2025UITests */,
+				217FB3722E44F675000EC483 /* Frameworks */,
+				214335652E091740004A1A09 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		214335652E091740004A1A09 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				214335642E091740004A1A09 /* My Inspection Buddy_MergeV1.0.app */,
+				214335712E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests.xctest */,
+				2143357B2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		217FB3722E44F675000EC483 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		214335632E091740004A1A09 /* My Inspection Buddy_MergeV1.0 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 214335852E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0" */;
+			buildPhases = (
+				214335602E091740004A1A09 /* Sources */,
+				214335612E091740004A1A09 /* Frameworks */,
+				214335622E091740004A1A09 /* Resources */,
+				217FB3752E44F675000EC483 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				214335662E091740004A1A09 /* My Inspection Buddy_2025 */,
+			);
+			name = "My Inspection Buddy_MergeV1.0";
+			productName = "My Inspection Buddy_2025";
+			productReference = 214335642E091740004A1A09 /* My Inspection Buddy_MergeV1.0.app */;
+			productType = "com.apple.product-type.application";
+		};
+		214335702E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 214335882E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0Tests" */;
+			buildPhases = (
+				2143356D2E091742004A1A09 /* Sources */,
+				2143356E2E091742004A1A09 /* Frameworks */,
+				2143356F2E091742004A1A09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				214335732E091742004A1A09 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				214335742E091742004A1A09 /* My Inspection Buddy_2025Tests */,
+			);
+			name = "My Inspection Buddy_MergeV1.0Tests";
+			productName = "My Inspection Buddy_2025Tests";
+			productReference = 214335712E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2143357A2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2143358B2E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0UITests" */;
+			buildPhases = (
+				214335772E091742004A1A09 /* Sources */,
+				214335782E091742004A1A09 /* Frameworks */,
+				214335792E091742004A1A09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2143357D2E091742004A1A09 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2143357E2E091742004A1A09 /* My Inspection Buddy_2025UITests */,
+			);
+			name = "My Inspection Buddy_MergeV1.0UITests";
+			productName = "My Inspection Buddy_2025UITests";
+			productReference = 2143357B2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2143355C2E091740004A1A09 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					214335632E091740004A1A09 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					214335702E091742004A1A09 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 214335632E091740004A1A09;
+					};
+					2143357A2E091742004A1A09 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 214335632E091740004A1A09;
+					};
+				};
+			};
+			buildConfigurationList = 2143355F2E091740004A1A09 /* Build configuration list for PBXProject "My Inspection Buddy_MergeV1.0" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2143355B2E091740004A1A09;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				21F9534A2E3C3A4100313173 /* XCRemoteSwiftPackageReference "serpapi-search-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 214335652E091740004A1A09 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				214335632E091740004A1A09 /* My Inspection Buddy_MergeV1.0 */,
+				214335702E091742004A1A09 /* My Inspection Buddy_MergeV1.0Tests */,
+				2143357A2E091742004A1A09 /* My Inspection Buddy_MergeV1.0UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		214335622E091740004A1A09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2143356F2E091742004A1A09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214335792E091742004A1A09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		214335602E091740004A1A09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2143356D2E091742004A1A09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214335772E091742004A1A09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		214335732E091742004A1A09 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 214335632E091740004A1A09 /* My Inspection Buddy_MergeV1.0 */;
+			targetProxy = 214335722E091742004A1A09 /* PBXContainerItemProxy */;
+		};
+		2143357D2E091742004A1A09 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 214335632E091740004A1A09 /* My Inspection Buddy_MergeV1.0 */;
+			targetProxy = 2143357C2E091742004A1A09 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		214335832E091742004A1A09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		214335842E091742004A1A09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		214335862E091742004A1A09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = S8CKN5R4P7;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Unity-iPhone/Frameworks";
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Unity-iOS-Build/Classes/**";
+				INFOPLIST_FILE = "My-Inspection-Buddy-MergeV1-0-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to take photos of devices for inspection detection";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show contacts in your county.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-Wl,-U,\"_NativeCalls_onMessage\"";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArgusSun.MyInspectionBuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/wang/Desktop/iOS Dev Apps/My Inspection Buddy_MergeV1.0/MyInspectionBuddy_MergeV1.0-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		214335872E091742004A1A09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = "My Inspection Buddy_MergeV1.0Release.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = S8CKN5R4P7;
+				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Unity-iPhone/Frameworks";
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Unity-iOS-Build/Classes/**";
+				INFOPLIST_FILE = "My-Inspection-Buddy-MergeV1-0-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to take photos of devices for inspection detection";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show contacts in your county.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-Wl,-U,\"_NativeCalls_onMessage\"";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArgusSun.MyInspectionBuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/wang/Desktop/iOS Dev Apps/My Inspection Buddy_MergeV1.0/MyInspectionBuddy_MergeV1.0-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		214335892E091742004A1A09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruiwang.My-Inspection-Buddy-2025Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Inspection Buddy_MergeV1.0.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/My Inspection Buddy_MergeV1.0";
+			};
+			name = Debug;
+		};
+		2143358A2E091742004A1A09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruiwang.My-Inspection-Buddy-2025Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Inspection Buddy_MergeV1.0.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/My Inspection Buddy_MergeV1.0";
+			};
+			name = Release;
+		};
+		2143358C2E091742004A1A09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to take photos of devices for inspection reports.";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruiwang.My-Inspection-Buddy-2025UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "My Inspection Buddy_2025";
+			};
+			name = Debug;
+		};
+		2143358D2E091742004A1A09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PWLBFCSU3J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to take photos of devices for inspection reports.";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruiwang.My-Inspection-Buddy-2025UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "My Inspection Buddy_2025";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2143355F2E091740004A1A09 /* Build configuration list for PBXProject "My Inspection Buddy_MergeV1.0" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214335832E091742004A1A09 /* Debug */,
+				214335842E091742004A1A09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		214335852E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214335862E091742004A1A09 /* Debug */,
+				214335872E091742004A1A09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		214335882E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214335892E091742004A1A09 /* Debug */,
+				2143358A2E091742004A1A09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2143358B2E091742004A1A09 /* Build configuration list for PBXNativeTarget "My Inspection Buddy_MergeV1.0UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2143358C2E091742004A1A09 /* Debug */,
+				2143358D2E091742004A1A09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		21F9534A2E3C3A4100313173 /* XCRemoteSwiftPackageReference "serpapi-search-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/serpapi/serpapi-search-swift.git";
+			requirement = {
+				branch = dev;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+	};
+	rootObject = 2143355C2E091740004A1A09 /* Project object */;
+}
